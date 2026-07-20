@@ -1,0 +1,26 @@
+class Solution:
+    def maxConsecutiveAnswers(self, answerKey: str, k: int) -> int:
+        cntt=0
+        cntf=0
+        l=0
+        n=len(answerKey)
+        ans=0
+        for r in range(n):
+            if(answerKey[r]=="T"):
+                cntt+=1
+            else:
+                cntf+=1
+
+            while(min(cntt,cntf) > k):
+                if(answerKey[l]=="T"):
+                    cntt-=1
+                else:
+                    cntf-=1
+                l+=1
+            ans=max(ans,r-l+1)
+        return ans
+                   
+
+# Synced seamlessly with LeetHub Pro
+# Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+# Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna

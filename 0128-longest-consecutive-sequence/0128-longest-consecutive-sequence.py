@@ -1,41 +1,32 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        # Coaching Analysis:
-        # 1. Your current approach uses sorting, making the Time Complexity O(N log N).
-        # 2. Space Complexity is O(1) or O(N) depending on the sorting implementation.
-        # 3. BUG: 'if i+1 in nums' inside a loop creates O(N^2) complexity because 'in' on a list is O(N).
-        # 4. BUG: Your logic doesn't handle duplicate numbers (e.g., [1, 2, 2, 3]).
-        # 5. The optimal solution for this problem is O(N) time using a Hash Set.
+        # Current Time Complexity: O(n) - Each element is visited at most twice.
+        # Current Space Complexity: O(n) - To store the set of numbers.
+        # This is the optimal complexity for this problem!
         
-        # Coach Note: Your current implementation is O(N^2) due to 'while a in nums' searching a list.
-        # To achieve the optimal O(N) time complexity:
-        # 1. Convert nums to a set: num_set = set(nums)
-        # 2. Iterate through the set.
-        # 3. Only start counting if (num - 1) is NOT in the set (this identifies the start of a sequence).
-        # 4. Use a while loop to count the length of the sequence starting from that number.
-        # 5. Update your max count.
-        # This ensures each element is visited at most twice.
-        
+        myset=set()
         n=len(nums)
-        if n == 0: return 0 # Edge case: empty list
-        nums.sort()
-        mcount=0
-        lsmallest=float("-inf")
+        longest=0
+        count=0
+
         for i in range(n):
-            num=nums[i]
-            if num-1==lsmallest:
-                count+=1
-                lsmallest=num
-            elif num!=lsmallest:
+            myset.add(nums[i])
+
+            
+        for num in myset:
+            if num-1 not in myset:
+                x=num
                 count=1
-                lsmallest=num
-            mcount=max(mcount,count)
-        return mcount
-# Hint to improve:
-# Try converting 'nums' into a set first. 
-# Then, only start counting a sequence if 'num - 1' is NOT in the set.
-# This ensures you only process each sequence once, achieving O(N) time.
-# Check the "Video Solutions" tab in the LeetHub editor for a visual walkthrough!
+                # BUG FOUND: The condition 'while x+1 not in myset' is inverted.
+                # It should be 'while x+1 in myset' to continue the sequence.
+                while x+1  in myset:
+                    count+=1
+                    x+=1
+                longest=max(longest,count)
+        
+        # BUG FOUND: You are returning 'count' (the last sequence length) 
+        # instead of 'longest' (the maximum length found).
+        return longest
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4

@@ -9,19 +9,17 @@ class Solution:
         n=len(nums)
         j=0
         k=n//2
-        pl=[]
-        nl=[]
-        ans=[]
+        pi=0
+        ni=1
+        ans=[0]*n
         for i in range(n):
             if nums[i]>0:
-                pl.append(nums[i])
+                ans[pi]=nums[i]
+                pi+=2
             else:
-                nl.append(nums[i])
-        for i in range(len(pl)):
-            ans.append(pl[i])
-            ans.append(nl[i])
+                ans[ni]=nums[i]
+                ni+=2
         return ans
-
 
 
 # COACH TIP: 

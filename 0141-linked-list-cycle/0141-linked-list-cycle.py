@@ -6,28 +6,30 @@
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
+        # Coaching Analysis:
+        # Your logic is attempting Floyd's Cycle-Finding Algorithm (Tortoise and Hare),
+        # but there is a critical bug in how you update your pointers.
+        
+        # 1. Problem: You are using 'temp' to update 'fast' and 'slow', but 'temp' 
+        #    never changes inside the loop. This means 'fast' and 'slow' 
+        #    will just keep jumping to the same two nodes repeatedly.
+        # 2. Fix: Update 'fast' and 'slow' based on their own current positions.
+        
         # Current Complexity:
-        # Time: O(n^2) because 'if temp in arr' performs a linear search on the list every iteration.
-        # Space: O(n) to store nodes in the array.
-        # Optimal Complexity: Time O(n), Space O(1).
+        # Time: O(N) - but currently results in an infinite loop or wrong answer.
+        # Space: O(1)
+        # Optimal Complexity: Time O(N), Space O(1).
         
-        arr=set()
         temp=head
-        
-        while(temp is not None):
-            if temp in arr:
+        fast=head
+        slow=head
+        while(fast is not None and fast.next is not None):
+            # HINT: Instead of 'temp.next', use 'fast.next.next' and 'slow.next'
+            fast=fast.next.next
+            slow=slow.next
+            if fast==slow:
                 return True
-            arr.add(temp)
-            temp=temp.next
         return False
-        
-        # COACHING HINTS:
-        # 1. Logic Fix: Move the 'if temp in arr' check BEFORE the 'arr.append(temp)' line.
-        # 2. Efficiency: Using a Python 'set()' instead of a 'list' for 'arr' would reduce the 
-        #    lookup time from O(n) to O(1), making the overall time complexity O(n).
-        # 3. Challenge: Can you solve this without using any extra space (O(1) space)? 
-        #    Research "Floyd's Cycle-Finding Algorithm" (Two Pointers: Slow and Fast).
-        # 4. If you get stuck on the O(1) approach, check the "Video Solutions" tab in the LeetHub editor!
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4

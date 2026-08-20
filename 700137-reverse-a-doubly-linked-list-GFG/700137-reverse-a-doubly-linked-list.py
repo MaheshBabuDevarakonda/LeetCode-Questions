@@ -8,18 +8,18 @@ class Node:
 
 class Solution:
     def reverse(self, head):
+        if head.next is None:
+            return head
         # code here
-        temp=head
-        stack=[]
-        while(temp is not None):
-            stack.append(temp.data)
-            temp=temp.next
-        temp=head
-        while(temp is not None):
-            e=stack.pop()
-            temp.data=e
-            temp=temp.next
-        return head
+        curr=head
+        prev=None
+        while(curr is not None):
+            front=curr.next
+            curr.next=prev
+            curr.prev=front
+            prev=curr
+            curr=front
+        return prev
         
 
 # Synced seamlessly with LeetHub Pro

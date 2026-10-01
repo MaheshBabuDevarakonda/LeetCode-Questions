@@ -1,16 +1,20 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        stack = []
-        mapping = {")":"(", "}":"{", "]":"["}
-
-        for char in s:
-            if char in mapping.values():
-                stack.append(char)
-            elif char in mapping.keys():
-                if not stack or mapping[char] != stack.pop():
+        stack=[]
+        pairs = {
+        ')': '(',
+        ']': '[',
+        '}': '{'
+        }
+        for i in range(len(s)):
+            if s[i] in pairs:
+                if stack and stack[-1]==pairs[s[i]]:
+                    stack.pop()
+                else :
                     return False
-        
-        return not stack
+            else:
+                stack.append(s[i])
+        return len(stack) == 0
 
 # Synced seamlessly with LeetHub Pro
 # Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
